@@ -16,23 +16,19 @@ let bot = linebot({
 
 
 
-const PORT = 3000
-app.listen(PORT, function (res) {
-});
+const PORT = 8080
+app.listen(PORT);
 console.log(`START LISTEN PORT:${PORT}`)
-// app.post('/webhook', linebotParser);
-app.post('/', function (req, res) {
 
-    model.requestChat(req.body.message).then((data) => {
-        // console.log(data);
-        res.send({ "replay": data });
-    });
+app.get('/', function (req, res) {
+    res.send(`SERVER IS RUNNING ON ${PORT}`);
 });
 const parser = bodyParser.json({
     verify: function (req, res, buf, encoding) {
         req.rawBody = buf.toString(encoding);
     }
 });
+
 app.post('/webhook', parser, function (req, res) {
     bot.parse(req.body);
     return res.send({});
@@ -42,24 +38,15 @@ bot.on('message', function (event) {
     try {
         if (event.message.text.includes("欸")) {
             model.requestChat(event.message.text).then((replay) => {
-                event.reply(replay.toString()).then(function (data) {
-                    // console.log('Success', data);
-                }).catch(function (error) {
-                    // console.log('Error', error);
-                });
+                event.reply(replay.toString())
+            }).catch((err) => {
+                console.log(err)
+                event.reply('抱歉，我暫時無法操作。');
             });
         }
     } catch (error) {
         console.log(error)
-        event.reply('抱歉，我暫時無法操作。').then(function (data) {
-            // console.log('Success', data);
-        }).catch(function (error) {
-            // console.log('Error', error);
-        });
-        //do nothing   
+        event.reply('抱歉，我暫時無法操作。');
     }
-
-
-
 
 });

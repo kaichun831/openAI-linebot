@@ -33,10 +33,10 @@ exports.requestChat = function (content) {
         json: true,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer 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`
+            'Authorization': `Bearer ${KEY}`
         },
         body: {
-            "model": "gpt-3.5-turbo-0301",
+            "model": "gpt-3.5-turbo-0301", // gpt-3.5-turbo or gpt-3.5-turbo-0301
             "messages": [{ "role": "user", "content": content }]
         }
     };
@@ -47,10 +47,16 @@ exports.requestChat = function (content) {
                 reject("失敗")
                 console.log(err)
             }
+            console.log(body)
             // console.log(`Status: ${res.statusCode}`);
-            const replyMessage = body.choices[0].message.content;
-            console.log(replyMessage);
-            resolve(replyMessage)
+            try {
+                const replyMessage = body.choices[0].message.content;
+                console.log(replyMessage);
+                resolve(replyMessage)
+            } catch (err) {
+                reject(err)
+            }
+
         });
     });
 
