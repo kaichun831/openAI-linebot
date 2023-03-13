@@ -8,9 +8,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 let bot = linebot({
-    channelId: '1660722989',
-    channelSecret: '81cc379d15ec8c3e1cd565080a64b9d8',
-    channelAccessToken: '/Lz8CA70q7rrtZWzsFMezs/uzlcgxx68Xx6VNEaxdirvkdzDZB0lu4C7tPeGTw+P+wQapBXiXrW+ZJQbur0AHqzF8NMDFon+8Untkw7Uv7A21DgYFcmv+JKB1VvWCBjwsRlZmn8Pnf8LQyDDJd0HpQdB04t89/1O/w1cDnyilFU='
+    channelId: process.env.LINE_CHANNELID,
+    channelSecret: process.env.LINE_CHANNELSECRET,
+    channelAccessToken: process.env.LINE__ACCESS_TOKEN
 });
 
 

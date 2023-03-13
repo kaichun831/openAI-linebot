@@ -1,5 +1,4 @@
 const request = require('request');
-var webClient = require('https')
 require('dotenv').config();
 
 const KEY = process.env.OPENAI_API_KEY;
